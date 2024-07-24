@@ -1,6 +1,7 @@
 package main
 
 import (
+	"abhi/search/routes"
 	"fmt"
 	"log"
 	"os"
@@ -11,6 +12,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
 	"github.com/joho/godotenv"
+	
 )
 
 func main() {
@@ -30,6 +32,8 @@ func main() {
 	})
 
 	app.Use(compress.New())
+
+	routes.SetRoutes(app)
 	// start our server and listen for a shutdown
 	go func ()  {
 		if err := app.Listen(port); err != nil {
