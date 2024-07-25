@@ -4,7 +4,7 @@ go 1.21.5
 
 require (
 	github.com/a-h/templ v0.2.747
-	github.com/gofiber/fiber/v2 v2.52.4
+	github.com/gofiber/fiber/v2 v2.52.5
 	github.com/joho/godotenv v1.5.1
 )
 
