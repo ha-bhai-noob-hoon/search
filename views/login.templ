@@ -6,6 +6,7 @@ templ Login() {
             <form class="flex flex-col justify-center items-center gap-2 py-5" 
                 hx-post="/login" 
                 hx-target="#feedback" 
+                hx-target-error="#feedback"
                 hx-indicators="#indicator" 
             >
 
