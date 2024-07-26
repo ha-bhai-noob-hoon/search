@@ -1,6 +1,7 @@
 package main
 
 import (
+	"abhi/search/db"
 	"abhi/search/routes"
 	"fmt"
 	"log"
@@ -12,7 +13,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
 	"github.com/joho/godotenv"
-	
 )
 
 func main() {
@@ -32,7 +32,7 @@ func main() {
 	})
 
 	app.Use(compress.New())
-
+	db.InitDB()
 	routes.SetRoutes(app)
 	// start our server and listen for a shutdown
 	go func ()  {
