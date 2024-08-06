@@ -3,6 +3,7 @@ package main
 import (
 	"abhi/search/db"
 	"abhi/search/routes"
+	"abhi/search/utils"
 	"fmt"
 	"log"
 	"os"
@@ -34,6 +35,7 @@ func main() {
 	app.Use(compress.New())
 	db.InitDB()
 	routes.SetRoutes(app)
+	utils.StartCronJob()
 	// start our server and listen for a shutdown
 	go func ()  {
 		if err := app.Listen(port); err != nil {
