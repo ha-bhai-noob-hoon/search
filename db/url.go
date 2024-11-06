@@ -14,8 +14,8 @@ type CrawledUrl struct {
 	CrawledDuration time.Duration
 	ResponseCode 	int
 	PageTitle 		string
-	PageDescrition 	string 
-	Heading 		string 
+	PageDescription 	string 
+	Headings 		string 
 	LastTested 		*time.Time
 	Indexed 		bool
 	CreatedAt 		*time.Time

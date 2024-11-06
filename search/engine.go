@@ -35,8 +35,8 @@ func RunEngine(){
 				CrawledDuration: result.CrawlData.CrawlTime,
 				ResponseCode: crawl.ResponseCode,
 				PageTitle: result.CrawlData.PageTitle,
-				PageDescrition: result.CrawlData.PageDescription,
-				Heading: result.CrawlData.Headings,
+				PageDescription: result.CrawlData.PageDescription,
+				Headings: result.CrawlData.Headings,
 				LastTested: &testedTime,
 			})
 			if err != nil {
@@ -52,8 +52,8 @@ func RunEngine(){
 				CrawledDuration: result.CrawlData.CrawlTime,
 				ResponseCode: crawl.ResponseCode,
 				PageTitle: result.CrawlData.PageTitle,
-				PageDescrition: result.CrawlData.PageDescription,
-				Heading: result.CrawlData.Headings,
+				PageDescription: result.CrawlData.PageDescription,
+				Headings: result.CrawlData.Headings,
 				LastTested: &testedTime,
 		})
 		if err != nil {
@@ -76,4 +76,37 @@ func RunEngine(){
 		}
 	}
 	fmt.Printf("\n Added %d new urls to the databse ", len(newUrls))
+}
+
+func RunIndex() {
+	fmt.Println("started search indexing...")
+	defer fmt.Println("search indexing has finished")
+	// Get index settings from DB
+	crawled := &db.CrawledUrl{}
+	// Get all urls that are not indexed
+	notIndexed, err := crawled.GetNotIndexed()
+	fmt.Println("not indexed urls: ", len(notIndexed))
+	if err != nil {
+		fmt.Println("something went wrong getting the not indexed urls")
+		return
+	}
+	// Create a new index
+	idx := make(Index)
+	// Add the not indexed urls to the index
+	idx.Add(notIndexed)
+	// Save the index to the database
+	searchIndex := &db.SearchIndex{}
+	err = searchIndex.Save(idx, notIndexed)
+	if err != nil {
+		fmt.Println(err)
+		fmt.Println("something went wrong saving the index")
+		return
+	}
+	// Update the urls to be indexed=true
+	err = crawled.SetIndexedTrue(notIndexed)
+	if err != nil {
+		fmt.Println("something went wrong updating the indexed urls")
+		return
+	}
+
 }
